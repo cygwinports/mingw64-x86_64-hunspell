@@ -1,0 +1,33 @@
+CROSS_HOST="x86_64-w64-mingw32"
+inherit cross
+
+NAME="mingw64-x86_64-hunspell"
+VERSION=1.3.3
+RELEASE=1
+CATEGORY="Devel"
+SUMMARY="Spell checker and morphological analyzer for Win64 toolchain"
+DESCRIPTION="Hunspell is a spell checker and morphological analyzer library
+and program designed for languages with rich morphology and complex
+compounding or character encoding."
+HOMEPAGE="http://hunspell.sourceforge.net/"
+SRC_URI="mirror://sourceforge/hunspell/hunspell-${VERSION}.tar.gz"
+SRC_DIR="hunspell-${VERSION}"
+PATCH_URI="
+	http://pkgs.fedoraproject.org/cgit/hunspell.git/plain/hunspell.rhbz915448.patch
+"
+
+DIFF_EXCLUDES="intl m4 po"
+
+# nls: only used for tools
+CYGCONF_ARGS="--enable-threads=windows --disable-nls"
+
+DOCS="*.myspell"
+
+src_install() {
+	cd ${B}
+	cyginstall bin_PROGRAMS= dist_bin_SCRIPTS= man_MANS=
+
+	dosym libhunspell-${VERSION%.*}.dll.a ${CROSS_LIBDIR}/libhunspell.dll.a
+
+#	rm -f ${D}${CROSS_LIBDIR}/libparsers.a
+}

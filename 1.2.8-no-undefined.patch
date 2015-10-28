@@ -1,0 +1,31 @@
+--- origsrc/hunspell-1.2.8/src/hunspell/Makefile.am	2008-06-17 03:57:54.000000000 -0500
++++ src/hunspell-1.2.8/src/hunspell/Makefile.am	2008-08-17 20:13:43.157603200 -0500
+@@ -6,6 +6,8 @@
+ 		     dictmgr.cxx hashmgr.cxx hunspell.cxx utf_info.cxx \
+ 	             suggestmgr.cxx license.myspell license.hunspell \
+ 	             phonet.cxx filemgr.cxx hunzip.cxx replist.cxx
++
++libhunspell_1_2_la_LDFLAGS = -no-undefined
+ 
+ libhunspell_1_2_include_HEADERS=affentry.hxx htypes.hxx affixmgr.hxx \
+ 	        csutil.hxx hunspell.hxx atypes.hxx dictmgr.hxx hunspell.h \
+--- origsrc/hunspell-1.2.7/src/tools/Makefile.am	2008-08-17 20:16:19.144973100 -0500
++++ src/hunspell-1.2.7/src/tools/Makefile.am	2008-08-17 20:18:20.272298700 -0500
+@@ -14,14 +14,14 @@
+ hunspell_example_LDADD = ../hunspell/libhunspell-1.2.la
+ 
+ hunspell_SOURCES=hunspell.cxx
+-hunspell_LDADD = @LIBINTL@ ../hunspell/libhunspell-1.2.la \
+-	../parsers/libparsers.a @CURSESLIB@ @READLINELIB@
++hunspell_LDADD = ../parsers/libparsers.a ../hunspell/libhunspell-1.2.la \
++	@LTLIBINTL@ @LTLIBICONV@ @CURSESLIB@ @READLINELIB@
+ 
+ hunspell_analyze_SOURCES=analyze.cxx
+ hunspell_analyze_LDADD = ../hunspell/libhunspell-1.2.la
+ 
+ hunspell_chmorph_SOURCES=chmorph.cxx
+-hunspell_chmorph_LDADD = ../hunspell/libhunspell-1.2.la ../parsers/libparsers.a
++hunspell_chmorph_LDADD = ../parsers/libparsers.a ../hunspell/libhunspell-1.2.la
+ 
+ noinst_PROGRAMS=hunspell-example
+ 
